@@ -109,7 +109,7 @@ export default class Forks extends Vue {
         }
         await delayPromise;
         this.forks.forEach((fork: ForkInterface) => {
-            const idExistInFavorite = this.favoriteForkIds.find((x) => x === fork.id);
+            const idExistInFavorite = this.favoriteForkIds.find((x) => String(x) === String(fork.id));
             if (idExistInFavorite) {
                 fork.isFavorite = true;
             }
