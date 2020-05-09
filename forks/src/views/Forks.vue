@@ -58,7 +58,7 @@ import Q from 'q';
 import FavoriteForksModal from '@/modals/FavoriteForksModal.vue';
 import {mapGetters} from 'vuex';
 import { GetForks } from '@/services/api';
-import {ForkInterface} from '@/models/ForkInterface'
+import {ForkInterface} from '@/models/ForkInterface';
 
 @Component<Forks>({
     components: {
@@ -82,7 +82,7 @@ import {ForkInterface} from '@/models/ForkInterface'
     },
 })
 export default class Forks extends Vue {
-    public readonly favoriteForkIds!: String[];
+    public readonly favoriteForkIds!: string[];
     public forks: ForkInterface[] = [];
     public resultExist: boolean = false;
     public loadingFinish: boolean = false;
@@ -94,7 +94,6 @@ export default class Forks extends Vue {
 
     public async mounted() {
         swal.showLoading();
-        
         const delayPromise = Q.delay(1300);
         const parameters = this.$route.params;
         this.Repository = parameters.repository;
@@ -109,9 +108,9 @@ export default class Forks extends Vue {
             }
         }
         await delayPromise;
-        this.forks.forEach((fork:ForkInterface) => {
-            var idExistInFavorite = this.favoriteForkIds.find(x => x == fork.id);
-            if(idExistInFavorite) {
+        this.forks.forEach((fork: ForkInterface) => {
+            const idExistInFavorite = this.favoriteForkIds.find((x) => x === fork.id);
+            if (idExistInFavorite) {
                 fork.isFavorite = true;
             }
         });
@@ -121,17 +120,17 @@ export default class Forks extends Vue {
 
     public async SearchForks(owner: string, repoName: string) {
         const self = this;
-        var path = owner + '/' + repoName + '/forks';
-        var response = await GetForks(path, "GET");
-        if(response == undefined) {
+        const path = owner + '/' + repoName + '/forks';
+        const response = await GetForks(path, 'GET');
+        if (response === undefined) {
             self.resultExist = false;
             return;
         }
-        if(response.data.message) {
+        if (response.data.message) {
             self.resultExist = false;
         } else {
-            var forks = response.data;
-            this.forks = forks.map( (x:ForkInterface)=>  {
+            const forks = response.data;
+            this.forks = forks.map( (x: ForkInterface) =>  {
                 return {
                     full_name: x.full_name,
                     id: x.id,
@@ -140,9 +139,9 @@ export default class Forks extends Vue {
                     },
                     stargazers_count: x.stargazers_count,
                     url: x.url,
-                    isFavorite: false
-                }
-            })
+                    isFavorite: false,
+                };
+            });
             self.resultExist = true;
         }
     }
@@ -157,17 +156,17 @@ export default class Forks extends Vue {
 
     public openForkModal(fork: ForkInterface) {
         this.$modal.show('FavoriteForksModal', {
-            data: fork
+            data: fork,
         });
     }
 
     public addFavoriteId(id: string) {
-        var exist = this.favoriteForkIds.find(x => x == id);
-        if(!exist) {
+        const exist = this.favoriteForkIds.find((x) => x === id);
+        if (!exist) {
             this.$store.commit('AddFavoriteForkId', id);
-            var fork = this.forks.find(x => String(x.id) == String(id));
-            if(fork) {
-                fork.isFavorite = true
+            const fork = this.forks.find((x) => String(x.id) === String(id));
+            if (fork) {
+                fork.isFavorite = true;
             }
         }
     }

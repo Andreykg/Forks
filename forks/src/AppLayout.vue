@@ -11,12 +11,10 @@
 export default {
     name: 'AppLayout',
     mounted() {
-        var idsString = localStorage.getItem('favorite');
-        if(idsString) {
+        const idsString = localStorage.getItem('favorite');
+        if (idsString) {
             this.$store.commit('SaveFavoriteForkIds', idsString.split(','));
-        } 
+        }
     },
-    methods: {},
-    beforeCreate() {}
 };
 </script>

@@ -28,7 +28,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {ForkInterface} from '@/models/ForkInterface'
+import {ForkInterface} from '@/models/ForkInterface';
 
 @Component<FavoriteForksModal>({
     props: {
@@ -41,11 +41,11 @@ export default class FavoriteForksModal extends Vue {
         id: '',
         full_name: '',
         owner: {
-            login: ''
+            login: '',
         },
         stargazers_count: 0,
         url: '',
-        isFavorite: false
+        isFavorite: false,
     };
 
     public beforeOpen(event: any) {
@@ -53,27 +53,25 @@ export default class FavoriteForksModal extends Vue {
             this.item = event.params.data;
         }
     }
-
-    public hide () {
+    public hide() {
         this.$modal.hide(this.name);
     }
-    
-    add(item: ForkInterface) {
-        var idsString = localStorage.getItem('favorite');
-        if(idsString) {
+    public add(item: ForkInterface) {
+        const idsString = localStorage.getItem('favorite');
+        if (idsString) {
                 var existingItemArray = idsString.split(',');
-                var res = existingItemArray.find(x => x == item.id);
-                if(!res) {
+                const res = existingItemArray.find((x) => x === item.id);
+                if (!res) {
                 existingItemArray.push(item.id);
                 localStorage.setItem('favorite', existingItemArray.toString());
             }
         } else {
-            var ids = [];
+            let ids = [];
             ids.push(item.id);
             localStorage.setItem('favorite', ids.toString());
         }
         this.hide();
-        this.$emit("addFavoriteId", item.id);
+        this.$emit('addFavoriteId', item.id);
     }
 }
 </script>

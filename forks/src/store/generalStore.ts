@@ -1,16 +1,16 @@
 import Vuex, { StoreOptions } from 'vuex';
 
 export interface GeneralState {
-  favoriteForkIds: Array<string>;
+  favoriteForkIds: string[];
 }
 
 const storeState: GeneralState = {
-  favoriteForkIds: []
+  favoriteForkIds: [],
 };
 export const generalStore: StoreOptions<GeneralState> = {
   state: storeState,
   getters: {
-    GetFavoriteForkIds: state => {
+    GetFavoriteForkIds: (state) => {
       return state.favoriteForkIds;
     },
   },

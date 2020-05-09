@@ -36,7 +36,7 @@ const routes = [
           name: 'Forks',
         },
       },
-    ]
+    ],
   },
 ];
 

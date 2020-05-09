@@ -22,8 +22,8 @@ import SearchForm from '@/components/SearchForm.vue';
 export default {
   data() {
     return {
-      show: false
-    }
+      show: false,
+    };
   },
   name: 'Home',
   components: {
@@ -31,7 +31,7 @@ export default {
   },
   mounted() {
     this.show = true;
-  }
+  },
 };
 </script>
 
