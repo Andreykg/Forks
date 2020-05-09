@@ -7,7 +7,6 @@ import './assets/css/style.css';
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'sass-loader';
 
 Vue.config.productionTip = false;
 Vue.use(VModal);

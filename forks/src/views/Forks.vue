@@ -56,7 +56,8 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import Q from 'q';
 import FavoriteForksModal from '@/modals/FavoriteForksModal.vue';
-import { GetForks } from "@/services/api";
+import {mapGetters} from 'vuex';
+import { GetForks } from '@/services/api';
 import {ForkInterface} from '@/models/ForkInterface'
 
 @Component<Forks>({
@@ -75,10 +76,13 @@ import {ForkInterface} from '@/models/ForkInterface'
             const end = start + this.size;
             return this.forks.slice(start, end);
         },
+        ...mapGetters({
+            favoriteForkIds: 'GetFavoriteForkIds',
+        }),
     },
 })
 export default class Forks extends Vue {
-    public favoriteForkIds: Array<string> = [];
+    public readonly favoriteForkIds!: String[];
     public forks: ForkInterface[] = [];
     public resultExist: boolean = false;
     public loadingFinish: boolean = false;
@@ -90,10 +94,7 @@ export default class Forks extends Vue {
 
     public async mounted() {
         swal.showLoading();
-        var idsString = localStorage.getItem('favorite');
-        if(idsString) {
-            this.favoriteForkIds = idsString.split(',');
-        }
+        
         const delayPromise = Q.delay(1300);
         const parameters = this.$route.params;
         this.Repository = parameters.repository;
@@ -163,7 +164,7 @@ export default class Forks extends Vue {
     public addFavoriteId(id: string) {
         var exist = this.favoriteForkIds.find(x => x == id);
         if(!exist) {
-            this.favoriteForkIds.push(id);
+            this.$store.commit('AddFavoriteForkId', id);
             var fork = this.forks.find(x => String(x.id) == String(id));
             if(fork) {
                 fork.isFavorite = true
